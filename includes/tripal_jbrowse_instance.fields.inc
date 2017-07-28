@@ -40,7 +40,7 @@ function tripal_jbrowse_instance_bundle_fields_info($entity_type, $bundle) {
   // Because we are expecting data housed in Chado we can use the 'data_table'
   // property of the bundle to determine if this bundle is really the one
   // we want the field to be associated with.
-  //if (isset($bundle->data_table) AND ($bundle->data_table == 'organism')) {
+  if (isset($bundle->data_table) AND ($bundle->data_table == 'organism')) {
     // First add my term.
     tripal_insert_cvterm([
       'id' => 'edam:genome_visualisation',
@@ -61,7 +61,7 @@ function tripal_jbrowse_instance_bundle_fields_info($entity_type, $bundle) {
         'type' => 'field_chado_storage',
       ],
     ];
-  //}
+  }
 
   return $fields;
 }
@@ -95,11 +95,7 @@ function tripal_jbrowse_instance_bundle_instances_info($entity_type, $bundle) {
 
   // ORGANISM.
   //===============
-  //if (isset($bundle->data_table) AND ($bundle->data_table == 'organism')) {
-
-    // Germplasm Summary Field.
-    //---------------------------------
-    // Sumarizes germplasm on the organism page.
+  if (isset($bundle->data_table) AND ($bundle->data_table == 'organism')) {
     $field_name = 'edam__genome_visualisation';
     $field_type = 'edam__genome_visualisation';
     $instances[$field_name] = [
@@ -127,7 +123,7 @@ function tripal_jbrowse_instance_bundle_instances_info($entity_type, $bundle) {
         ],
       ],
     ];
-  //}
+  }
 
   return $instances;
 }
