@@ -40,18 +40,18 @@ function tripal_jbrowse_instance_bundle_fields_info($entity_type, $bundle) {
   // Because we are expecting data housed in Chado we can use the 'data_table'
   // property of the bundle to determine if this bundle is really the one
   // we want the field to be associated with.
-  if (isset($bundle->data_table) AND ($bundle->data_table == 'organism')) {
+  //if (isset($bundle->data_table) AND ($bundle->data_table == 'organism')) {
     // First add my term.
     tripal_insert_cvterm([
-      'id' => 'local:jbrowse_instance',
-      'name' => 'jbrowse_instance',
-      'cv_name' => 'local',
+      'id' => 'edam:genome_visualisation',
+      'name' => 'genome_visualisation',
+      'cv_name' => 'edam',
       'definition' => 'Provides a JBrowse link',
     ]);
 
     // Then describe the field defined by that term.
-    $field_name = 'local__jbrowse_instance';
-    $field_type = 'local__jbrowse_instance';
+    $field_name = 'edam__genome_visualisation';
+    $field_type = 'edam__genome_visualisation';
     $fields[$field_name] = [
       'field_name' => $field_name,
       'type' => $field_type,
@@ -61,7 +61,7 @@ function tripal_jbrowse_instance_bundle_fields_info($entity_type, $bundle) {
         'type' => 'field_chado_storage',
       ],
     ];
-  }
+  //}
 
   return $fields;
 }
@@ -95,13 +95,13 @@ function tripal_jbrowse_instance_bundle_instances_info($entity_type, $bundle) {
 
   // ORGANISM.
   //===============
-  if (isset($bundle->data_table) AND ($bundle->data_table == 'organism')) {
+  //if (isset($bundle->data_table) AND ($bundle->data_table == 'organism')) {
 
     // Germplasm Summary Field.
     //---------------------------------
     // Sumarizes germplasm on the organism page.
-    $field_name = 'local__jbrowse_instance';
-    $field_type = 'local__jbrowse_instance';
+    $field_name = 'edam__genome_visualisation';
+    $field_type = 'edam__genome_visualisation';
     $instances[$field_name] = [
       'field_name' => $field_name,
       'entity_type' => $entity_type,
@@ -116,18 +116,18 @@ function tripal_jbrowse_instance_bundle_instances_info($entity_type, $bundle) {
         'base_table' => $bundle->data_table,
       ],
       'widget' => [
-        'type' => 'local__jbrowse_instance_widget',
+        'type' => 'edam__genome_visualisation_widget',
         'settings' => [],
       ],
       'display' => [
         'default' => [
           'label' => 'hidden',
-          'type' => 'local__jbrowse_instance_formatter',
+          'type' => 'edam__genome_visualisation_formatter',
           'settings' => [],
         ],
       ],
     ];
-  }
+  //}
 
   return $instances;
 }

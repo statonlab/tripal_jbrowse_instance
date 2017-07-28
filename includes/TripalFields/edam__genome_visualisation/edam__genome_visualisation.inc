@@ -6,7 +6,7 @@
  * Data:
  * Assumptions:
  */
-class local__jbrowse_instance extends ChadoField {
+class edam__genome_visualisation extends ChadoField {
 
   // --------------------------------------------------------------------------
   //                     EDITABLE STATIC CONSTANTS
@@ -23,10 +23,10 @@ class local__jbrowse_instance extends ChadoField {
   public static $default_description = 'Link to JBrowse location';
 
   // The default widget for this field.
-  public static $default_widget = 'local__jbrowse_instance_widget';
+  public static $default_widget = 'edam__genome_visualisation_widget';
 
   // The default formatter for this field.
-  public static $default_formatter = 'local__jbrowse_instance_formatter';
+  public static $default_formatter = 'edam__genome_visualisation_formatter';
 
   // The module that manages this field.
   public static $module = 'tripal_jbrowse_instance';
@@ -56,11 +56,11 @@ class local__jbrowse_instance extends ChadoField {
   // required for all TripalFields.
   public static $default_instance_settings = array(
     // The short name for the vocabulary (e.g. schema, SO, GO, PATO, etc.).
-    'term_vocabulary' => 'local',
+    'term_vocabulary' => 'EDAM',
     // The name of the term.
-    'term_name' => 'jbrowse',
+    'term_name' => 'genome_visualisation',
     // The unique ID (i.e. accession) of the term.
-    'term_accession' => 'jbrowse',
+    'term_accession' => '3208',
     // Set to TRUE if the site admin is not allowed to change the term
     // type, otherwise the admin can change the term mapped to a field.
     'term_fixed' => FALSE,
