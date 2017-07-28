@@ -1,0 +1,7 @@
+<?php
+/**
+* @file
+* A description of what your module does.
+*/
+
+include drupal_get_path('module', 'tripal_jbrowse_instance') . '/includes/tripal_jbrowse_instance.fields.inc';
