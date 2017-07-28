@@ -56,7 +56,7 @@ class local__jbrowse_instance extends ChadoField {
   // required for all TripalFields.
   public static $default_instance_settings = array(
     // The short name for the vocabulary (e.g. schema, SO, GO, PATO, etc.).
-    'term_vocabulary' => 'schema',
+    'term_vocabulary' => 'local',
     // The name of the term.
     'term_name' => 'jbrowse',
     // The unique ID (i.e. accession) of the term.

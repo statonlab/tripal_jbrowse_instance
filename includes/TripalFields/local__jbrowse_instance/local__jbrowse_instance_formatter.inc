@@ -83,6 +83,11 @@ class local__jbrowse_instance_formatter extends ChadoFieldFormatter {
     // Get the settings
     $settings = $display['settings'];
 
+
+    $element[0] = [
+      '#type' => 'markup',
+      '#markup' => '<p>Display text</p>'
+    ];
   }
 
   /**

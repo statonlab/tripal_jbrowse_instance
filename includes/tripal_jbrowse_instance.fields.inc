@@ -37,14 +37,6 @@
 function tripal_jbrowse_instance_bundle_fields_info($entity_type, $bundle) {
   $fields = [];
 
-  dpm('This has been called');
-  tripal_insert_cvterm([
-    'id' => 'local:jbrowse_instance',
-    'name' => 'jbrowse_instance',
-    'cv_name' => 'jbrowse',
-    'definition' => 'Provides a JBrowse link',
-  ]);
-
   // Because we are expecting data housed in Chado we can use the 'data_table'
   // property of the bundle to determine if this bundle is really the one
   // we want the field to be associated with.
@@ -53,7 +45,7 @@ function tripal_jbrowse_instance_bundle_fields_info($entity_type, $bundle) {
     tripal_insert_cvterm([
       'id' => 'local:jbrowse_instance',
       'name' => 'jbrowse_instance',
-      'cv_name' => 'jbrowse',
+      'cv_name' => 'local',
       'definition' => 'Provides a JBrowse link',
     ]);
 
