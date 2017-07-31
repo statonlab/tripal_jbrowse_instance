@@ -43,15 +43,15 @@ function tripal_jbrowse_instance_bundle_fields_info($entity_type, $bundle) {
   if (isset($bundle->data_table) AND ($bundle->data_table == 'organism')) {
     // First add my term.
     tripal_insert_cvterm([
-      'id' => 'edam:genome_visualisation',
-      'name' => 'genome_visualisation',
+      'id' => 'edam:genome_rendering',
+      'name' => 'genome_rendering',
       'cv_name' => 'edam',
       'definition' => 'Provides a JBrowse link',
     ]);
 
     // Then describe the field defined by that term.
-    $field_name = 'edam__genome_visualisation';
-    $field_type = 'edam__genome_visualisation';
+    $field_name = 'edam__genome_rendering';
+    $field_type = 'edam__genome_rendering';
     $fields[$field_name] = [
       'field_name' => $field_name,
       'type' => $field_type,
@@ -95,9 +95,10 @@ function tripal_jbrowse_instance_bundle_instances_info($entity_type, $bundle) {
 
   // ORGANISM.
   //===============
+  dpm($bundle);
   if (isset($bundle->data_table) AND ($bundle->data_table == 'organism')) {
-    $field_name = 'edam__genome_visualisation';
-    $field_type = 'edam__genome_visualisation';
+    $field_name = 'edam__genome_rendering';
+    $field_type = 'edam__genome_rendering';
     $instances[$field_name] = [
       'field_name' => $field_name,
       'entity_type' => $entity_type,
@@ -106,20 +107,21 @@ function tripal_jbrowse_instance_bundle_instances_info($entity_type, $bundle) {
       'description' => 'Provides a link to JBrowse.',
       'required' => FALSE,
       'settings' => [
-        'auto_attach' => FALSE,
+        'auto_attach' => TRUE,
         'chado_table' => $bundle->data_table,
         'chado_column' => 'organism_id',
         'base_table' => $bundle->data_table,
       ],
       'widget' => [
-        'type' => 'edam__genome_visualisation_widget',
+        'type' => 'edam__genome_rendering_widget',
         'settings' => [],
       ],
       'display' => [
         'default' => [
           'label' => 'hidden',
-          'type' => 'edam__genome_visualisation_formatter',
+          'region' => 'Right',
           'settings' => [],
+          'type' => 'edam__genome_rendering_formatter',
         ],
       ],
     ];

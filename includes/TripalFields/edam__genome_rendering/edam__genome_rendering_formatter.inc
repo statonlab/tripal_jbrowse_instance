@@ -6,13 +6,13 @@
  * Display:
  * Configuration:
  */
-class edam__genome_visualisation_formatter extends ChadoFieldFormatter {
+class edam__genome_rendering_formatter extends ChadoFieldFormatter {
 
   // The default label for this field.
   public static $default_label = 'JBrowse Instance Formatter';
 
   // The list of field types for which this formatter is appropriate.
-  public static $field_types = array('edam__genome_visualisation');
+  public static $field_types = array('edam__genome_rendering');
 
   // The list of default settings for this formatter.
   public static $default_settings = array(

@@ -1,12 +1,13 @@
 <?php
-/** 
+
+/**
  * @class
  * Purpose:
  *
  * Data:
  * Assumptions:
  */
-class edam__genome_visualisation extends ChadoField {
+class edam__genome_rendering extends ChadoField{
 
   // --------------------------------------------------------------------------
   //                     EDITABLE STATIC CONSTANTS
@@ -23,10 +24,10 @@ class edam__genome_visualisation extends ChadoField {
   public static $default_description = 'Link to JBrowse location';
 
   // The default widget for this field.
-  public static $default_widget = 'edam__genome_visualisation_widget';
+  public static $default_widget = 'edam__genome_rendering_widget';
 
   // The default formatter for this field.
-  public static $default_formatter = 'edam__genome_visualisation_formatter';
+  public static $default_formatter = 'edam__genome_rendering_formatter';
 
   // The module that manages this field.
   public static $module = 'tripal_jbrowse_instance';
@@ -36,16 +37,16 @@ class edam__genome_visualisation extends ChadoField {
   // Drupal will automatically change these settings for all fields.
   // Once instances exist for a field type then these settings cannot be
   // changed.
-  public static $default_settings = array(
+  public static $default_settings = [
     'storage' => 'field_chado_storage',
-     // It is expected that all fields set a 'value' in the load() function.
-     // In many cases, the value may be an associative array of key/value pairs.
-     // In order for Tripal to provide context for all data, the keys should
-     // be a controlled vocabulary term (e.g. rdfs:type). Keys in the load()
-     // function that are supported by the query() function should be
-     // listed here.
-     'searchable_keys' => array(),
-  );
+    // It is expected that all fields set a 'value' in the load() function.
+    // In many cases, the value may be an associative array of key/value pairs.
+    // In order for Tripal to provide context for all data, the keys should
+    // be a controlled vocabulary term (e.g. rdfs:type). Keys in the load()
+    // function that are supported by the query() function should be
+    // listed here.
+    'searchable_keys' => [],
+  ];
 
   // Provide a list of instance specific settings. These can be access within
   // the instanceSettingsForm.  When the instanceSettingsForm is submitted
@@ -54,13 +55,13 @@ class edam__genome_visualisation extends ChadoField {
   // If you override this variable in a child class be sure to replicate the
   // term_name, term_vocab, term_accession and term_fixed keys as these are
   // required for all TripalFields.
-  public static $default_instance_settings = array(
+  public static $default_instance_settings = [
     // The short name for the vocabulary (e.g. schema, SO, GO, PATO, etc.).
-    'term_vocabulary' => 'EDAM',
+    'term_vocabulary' => 'edam',
     // The name of the term.
-    'term_name' => 'genome_visualisation',
+    'term_name' => 'genome_rendering',
     // The unique ID (i.e. accession) of the term.
-    'term_accession' => '3208',
+    'term_accession' => 'genome_rendering',
     // Set to TRUE if the site admin is not allowed to change the term
     // type, otherwise the admin can change the term mapped to a field.
     'term_fixed' => FALSE,
@@ -76,7 +77,7 @@ class edam__genome_visualisation extends ChadoField {
     'chado_column' => 'organism_id',
     // The base table.
     'base_table' => '',
-  );
+  ];
 
   // A boolean specifying that users should not be allowed to create
   // fields and instances of this field type through the UI. Such
@@ -90,7 +91,7 @@ class edam__genome_visualisation extends ChadoField {
   // the user but otherwise provides no data.
   public static $no_data = FALSE;
 
- /**
+  /**
    * Loads the field values from the underlying data store.
    *
    * @param $entity
@@ -114,16 +115,12 @@ class edam__genome_visualisation extends ChadoField {
    *   The array may contain as many other keys at the same level as 'value'
    *   but those keys are for internal field use and are not considered the
    *   value of the field.
-   *
-   *
    */
   public function load($entity) {
-
     // ChadoFields automatically load the chado column specified in the
     // default settings above. If that is all you need then you don't even
     // need to implement this function. However, if you need to add any
     // additional data to be used in the display, you should add it here.
     parent::load($entity);
-
   }
 }
