@@ -46,7 +46,7 @@ function tripal_jbrowse_instance_bundle_fields_info($entity_type, $bundle) {
       'id' => 'edam:genome_rendering',
       'name' => 'genome_rendering',
       'cv_name' => 'edam',
-      'definition' => 'Provides a JBrowse link',
+      'definition' => 'Visualise, format or render a nucleic acid sequence that is part of (and in context of) a complete genome sequence.',
     ]);
 
     // Then describe the field defined by that term.
@@ -95,7 +95,6 @@ function tripal_jbrowse_instance_bundle_instances_info($entity_type, $bundle) {
 
   // ORGANISM.
   //===============
-  dpm($bundle);
   if (isset($bundle->data_table) AND ($bundle->data_table == 'organism')) {
     $field_name = 'edam__genome_rendering';
     $field_type = 'edam__genome_rendering';
@@ -103,8 +102,8 @@ function tripal_jbrowse_instance_bundle_instances_info($entity_type, $bundle) {
       'field_name' => $field_name,
       'entity_type' => $entity_type,
       'bundle' => $bundle->name,
-      'label' => 'Jbrowse Instance',
-      'description' => 'Provides a link to JBrowse.',
+      'label' => 'JBrowse Instance',
+      'description' => 'Provides a link to the organism\'s JBrowse page.',
       'required' => FALSE,
       'settings' => [
         'auto_attach' => TRUE,
@@ -126,6 +125,40 @@ function tripal_jbrowse_instance_bundle_instances_info($entity_type, $bundle) {
       ],
     ];
   }
+
+    // Gene
+    //===============
+
+    if (isset($bundle->data_table) AND ($bundle->data_table == 'gene')) {
+        $field_name = 'edam__genome_rendering';
+        $field_type = 'edam__genome_rendering';
+        $instances[$field_name] = [
+            'field_name' => $field_name,
+            'entity_type' => $entity_type,
+            'bundle' => $bundle->name,
+            'label' => 'JBrowse Instance',
+            'description' => 'Provides a link to a gene in JBrowse.',
+            'required' => FALSE,
+            'settings' => [
+                'auto_attach' => TRUE,
+                'chado_table' => $bundle->data_table,
+                'chado_column' => 'gene_id',
+                'base_table' => $bundle->data_table,
+            ],
+            'widget' => [
+                'type' => 'edam__genome_rendering_widget',
+                'settings' => [],
+            ],
+            'display' => [
+                'default' => [
+                    'label' => 'hidden',
+                    'region' => 'Right',
+                    'settings' => [],
+                    'type' => 'edam__genome_rendering_formatter',
+                ],
+            ],
+        ];
+    }
 
   return $instances;
 }

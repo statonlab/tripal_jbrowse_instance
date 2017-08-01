@@ -1,4 +1,4 @@
-name = Tripal Jbrowse Instance
+name = Tripal JBrowse Instance
 description = A description of what your module does.
 core = 7.x
 dependencies[] = tripal
