@@ -10,7 +10,7 @@
 class edam__genome_rendering_widget extends ChadoFieldWidget {
 
   // The default label for this field.
-  public static $default_label = 'Jbrowse Instance Widget';
+  public static $default_label = 'JBrowse Instance Widget';
 
   // The list of field types for which this formatter is appropriate.
   public static $field_types = array('edam__genome_rendering');

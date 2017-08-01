@@ -1,7 +1,7 @@
 <?php
 /**
 * @file
-* A description of what your module does.
+* The JBrowse instance module provides a link to an organisms' jbrowse page.
 */
 
 include drupal_get_path('module', 'tripal_jbrowse_instance') . '/includes/tripal_jbrowse_instance.fields.inc';

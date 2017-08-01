@@ -18,7 +18,7 @@ class edam__genome_rendering extends ChadoField{
   // --------------------------------------------------------------------------
 
   // The default label for this field.
-  public static $default_label = 'Jbrowse Instance';
+  public static $default_label = 'JBrowse Instance';
 
   // The default description for this field.
   public static $default_description = 'Link to JBrowse location';
