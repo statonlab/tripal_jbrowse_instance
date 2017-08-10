@@ -1,7 +1,32 @@
 <?php
 /**
 * @file
-* The JBrowse instance module provides a link to an organisms' jbrowse page.
+* The JBrowse instance module provides a link to an organisms' JBrowse page.
 */
 
 include drupal_get_path('module', 'tripal_jbrowse_instance') . '/includes/tripal_jbrowse_instance.fields.inc';
+
+
+/**
+ * Implements hook_bundle_postcreate().
+ *
+ * This is a Tripal defined hook and is called in the TripalBundle::create()
+ * function to allow modules to perform tasks when a bundle is created.
+ *
+ * @param $bundle
+ */
+function tripal_jbrowse_instance_bundle_postcreate($bundle) {
+    $bundle_name = $bundle->name;
+    $bundle_data_table = $bundle->data_table;
+
+    /**
+     * https://api.drupal.org/api/drupal/modules%21field%21field.info.inc/function/field_info_instances/7.x
+    *
+ *   When retrieving the instances of a specific bundle (i.e. when both $entity_type and $bundle_name are  provided), the function also populates a static cache with the corresponding field definitions, allowing fast retrieval of field_info_field() later in the request.
+    */
+
+    $instances = field_info_instances('TripalEntity', $bundle_name);
+
+   // dpm($bundle_name);
+    _ds_layout_settings_info($bundle_name, $instances);
+}
