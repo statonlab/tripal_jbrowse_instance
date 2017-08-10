@@ -155,7 +155,7 @@ class edam__genome_rendering extends ChadoField
         // The column of the table in Chado where the value of the field comes from.
         'chado_column' => 'organism_id',
         // The base table.
-        'base_table' => '',
+        'base_table' => 'organism',
     ];
 
     // A boolean specifying that users should not be allowed to create
@@ -198,15 +198,22 @@ class edam__genome_rendering extends ChadoField
     public function load($entity)
     {
         $record = $entity->chado_record;
-        $organism = $record->organism_id;
+
+        $field_name = $this->field['field_name'];
+
+        // set default for empty record
+        $entity->{$field_name}['und'][0] = array(
+            'value' => array(),
+        );
+
+        if ($record){
+            $organism = $record->organism_id;
         $feature_id = $record->feature_id;
-        dpm($organism);
-        dpm($feature_id);
-        $linkout = "fake linkout";
+            $entity->{$field_name}['und'][0]['value']['linkout'] = "fake linkout";
 
-        //  $entity->$linkout = $linkout;
-        return $linkout;
 
+
+        }
         // ChadoFields automatically load the chado column specified in the
         // default settings above. If that is all you need then you don't even
         // need to implement this function. However, if you need to add any

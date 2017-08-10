@@ -14,7 +14,7 @@ function _tripal_jbrowse_instance_layout_settings_info($bundle_name, $instances)
     $region_right = [];
     $region_left = [];
     $prop_fields = [];
-    $summary_fields = [];
+    $summary_fields = []; //only rdfs__type
     $data_sequence_fields = [];
     $all_other_fields = [];
     $fields_with_regions = [];
@@ -29,24 +29,29 @@ function _tripal_jbrowse_instance_layout_settings_info($bundle_name, $instances)
         $bundle = tripal_load_bundle_entity(['name' => $bundle_name]);
         $term = tripal_load_term_entity(['term_id' => $bundle->term_id]);
 
-// Build one large multidimensional array of all instances to sort in alpha
-// order to display fields in label alpha order.
+// Build one large multidimensional array of all instances
         foreach ($instances as $key => $instance) {
             $all_fields[$i] = $instance;
             $i++;
         }
+
+        // sort in alpha order here
 //usort($all_fields, tripal_ds_sort_array('label'));
 
-// Iterate through the fields of this bundle.
+// Iterate through the fields of this bundle
         foreach ($all_fields as $key => $instance) {
             $instance_name = $instance['field_name'];
             if ($instance_name == "rdfs__type") {
+                //rdf:type is a property used to state that a resource is an instance of a class. A commonly accepted qname for this property is "a".[
+
                 array_push($summary_fields, $instance_name);
             } else {
 //TODO: How do we handle non-chado dbs, placement of fields within
 // tripal panes might need to be done in a hook.
                 $instance_base_table = array_key_exists('base_table', $instance['settings']) ? $instance['settings']['base_table'] : '';
                 $instance_base_chado = array_key_exists('chado_table', $instance['settings']) ? $instance['settings']['chado_table'] : '';
+
+                // search if prop is in prop table and data__sequence is in instance name.
                 $prop_table = strpos($instance_base_chado, 'prop');
                 $data_sequence = strpos($instance_name, 'data__sequence');
                 if ($instance_base_chado && $instance_base_table) {
@@ -126,9 +131,9 @@ function _tripal_jbrowse_instance_layout_settings_info($bundle_name, $instances)
 //Add the original instances that were passed and the field_groups that
 //were created.
             $field_group_fields = db_select('field_group', 'fg')->fields('fg', [
-                    'group_name',
-                    'data',
-                ])->condition('bundle', $bundle_name, '=')->execute()->fetchAll();
+                'group_name',
+                'data',
+            ])->condition('bundle', $bundle_name, '=')->execute()->fetchAll();
 
             $instance_names = [];
             $field_group_names = [];

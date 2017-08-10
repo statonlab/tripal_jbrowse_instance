@@ -59,7 +59,7 @@ class edam__genome_rendering_formatter extends ChadoFieldFormatter {
    *
    * This function corresponds to the hook_field_formatter_view()
    * function of the Drupal Field API.
-   *
+   *  https://api.drupal.org/api/drupal/modules%21field%21field.api.php/function/hook_field_formatter_view/7.x
    *  This function provides the display for a field when it is viewed on
    *  the web page.  The content returned by the formatter should only include
    *  what is present in the $items[$delta]['values] array. This way, the
@@ -80,15 +80,28 @@ class edam__genome_rendering_formatter extends ChadoFieldFormatter {
    */
   public function view(&$element, $entity_type, $entity, $langcode, $items, $display) {
 
-    // Get the settings
+// i want to check the bundle type here but i dont think I'm supposed to!
+
+      $organismName = 'bob';
+      $feature_id = '1';
+
+      // Get the settings
     $settings = $display['settings'];
+    dpm($settings);
+
+      $content = l('View this gene in JBrowse',  'https://hardwoodgenomics.org/tools/jbrowse/index.html?data=' . $organismName . '_' . $feature_id);
 
 
+      // The cardinality of this field is 1 so we don't have to
+      // iterate through the items array, as there will never be more than 1.
     $element[0] = [
       '#type' => 'markup',
-      '#markup' => '<p>Display text</p>'
+      '#markup' => $content,
     ];
   }
+
+
+
 
   /**
    * Provides a summary of the formatter settings.
