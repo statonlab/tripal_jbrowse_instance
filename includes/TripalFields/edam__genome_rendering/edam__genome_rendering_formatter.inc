@@ -87,7 +87,7 @@ class edam__genome_rendering_formatter extends ChadoFieldFormatter{
     $exists = $entity->edam__genome_rendering['und'][0]['record'];
 
     if (!$exists) {
-      $entity->edam__genome_rendering['und'][0]['value'] = NULL;
+      $entity->edam__genome_rendering['und'][0] = NULL;
       return;
     }
 
