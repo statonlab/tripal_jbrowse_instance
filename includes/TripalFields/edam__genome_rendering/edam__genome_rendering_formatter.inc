@@ -85,6 +85,12 @@ class edam__genome_rendering_formatter extends ChadoFieldFormatter{
 
     $empty_message = '<p style="margin: 10px 0;">A JBrowse instance does not exist for this organism.</p>';
     $exists = $entity->edam__genome_rendering['und'][0]['record'];
+
+    if (!$exists) {
+      $entity->edam__genome_rendering['und'][0]['value'] = NULL;
+      return;
+    }
+
     $element[0] = [
       '#type' => 'markup',
       '#markup' => $exists ? $this->render($entity) : $empty_message,
