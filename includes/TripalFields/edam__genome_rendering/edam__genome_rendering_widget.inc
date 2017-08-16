@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @class
  * Purpose:
@@ -7,13 +8,13 @@
  * Data:
  * Assumptions:
  */
-class edam__genome_rendering_widget extends ChadoFieldWidget {
+class edam__genome_rendering_widget extends ChadoFieldWidget{
 
   // The default label for this field.
   public static $default_label = 'JBrowse Instance Widget';
 
   // The list of field types for which this formatter is appropriate.
-  public static $field_types = array('edam__genome_rendering');
+  public static $field_types = ['edam__genome_rendering'];
 
   /**
    * Provides the form for editing of this field.
@@ -104,24 +105,23 @@ class edam__genome_rendering_widget extends ChadoFieldWidget {
    * chado.feature_synonym table.  This insert occurs in the widgetFormSubmit
    * function.
    *
-   *  @param $entity_type
+   * @param $entity_type
    *    The type of $entity.
-   *  @param $entity
+   * @param $entity
    *    The entity for the operation.
-   *  @param $field
+   * @param $field
    *    The field structure for the operation.
-   *  @param $instance
+   * @param $instance
    *    The instance structure for $field on $entity's bundle.
-   *  @param $langcode
+   * @param $langcode
    *    The language associated with $items.
-   *  @param $items
+   * @param $items
    *    $entity->{$field['field_name']}[$langcode], or an empty array if unset.
-   *  @param $form
+   * @param $form
    *    The submitted form array.
-   *  @param $form_state.
+   * @param $form_state .
    *    The form state array.
    */
   public function submit($form, &$form_state, $entity_type, $entity, $langcode, $delta) {
   }
-
 }
