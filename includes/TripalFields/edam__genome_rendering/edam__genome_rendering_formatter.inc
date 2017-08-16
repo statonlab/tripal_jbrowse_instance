@@ -145,7 +145,8 @@ class edam__genome_rendering_formatter extends ChadoFieldFormatter{
    * @param $node
    */
   protected function parse_link(&$record, $entity) {
-    //$type = $entity->chado_table;
+    dpm($entity);
+    $type = $entity->chado_table;
     // Add loc parameters
     if (!empty($record->tracks)) {
       $tracks = json_decode($record->tracks);
@@ -163,10 +164,10 @@ class edam__genome_rendering_formatter extends ChadoFieldFormatter{
       }
     }
 
-    //if ($type === 'feature') {
-    //$record->link .= "&loc={$node->feature->uniquename}";
-    //$record->link .= "&highlight={$node->feature->uniquename}";
-    //}
+    if ($type === 'feature') {
+      //$record->link .= "&loc={$entity->chado_feature->uniquename}";
+      //$record->link .= "&highlight={$node->feature->uniquename}";
+    }
   }
 
   /**
