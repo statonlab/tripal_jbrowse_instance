@@ -165,7 +165,7 @@ class edam__genome_rendering_formatter extends ChadoFieldFormatter{
     }
 
     if ($type === 'feature') {
-      //$record->link .= "&loc={$entity->chado_feature->uniquename}";
+      $record->link .= "&loc={$entity->chado_record->uniquename}";
       //$record->link .= "&highlight={$node->feature->uniquename}";
     }
   }
