@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @class
  * Purpose:
@@ -6,18 +7,18 @@
  * Display:
  * Configuration:
  */
-class edam__genome_rendering_formatter extends ChadoFieldFormatter {
+class edam__genome_rendering_formatter extends ChadoFieldFormatter{
 
   // The default label for this field.
   public static $default_label = 'JBrowse Instance Formatter';
 
   // The list of field types for which this formatter is appropriate.
-  public static $field_types = array('edam__genome_rendering');
+  public static $field_types = ['edam__genome_rendering'];
 
   // The list of default settings for this formatter.
-  public static $default_settings = array(
+  public static $default_settings = [
     'key' => 'default_value',
-  );
+  ];
 
   /**
    * Provides the field's setting form.
@@ -67,26 +68,26 @@ class edam__genome_rendering_formatter extends ChadoFieldFormatter {
    *  into a CSV file will always be identical.  The view need not show all
    *  of the data in the 'values' array.
    *
-   *  @param $element
-   *  @param $entity_type
-   *  @param $entity
-   *  @param $langcode
-   *  @param $items
-   *  @param $display
+   * @param $element
+   * @param $entity_type
+   * @param $entity
+   * @param $langcode
+   * @param $items
+   * @param $display
    *
-   *  @return
+   * @return
    *    An element array compatible with that returned by the
    *    hook_field_formatter_view() function.
    */
   public function view(&$element, $entity_type, $entity, $langcode, $items, $display) {
-
     // Get the settings
     $settings = $display['settings'];
 
-
+    $empty_message = '<p style="margin: 10px 0;">A JBrowse instance does not exist for this organism.</p>';
+    $exists = $entity->edam__genome_rendering['und'][0]['record'];
     $element[0] = [
       '#type' => 'markup',
-      '#markup' => '<p>Display text</p>'
+      '#markup' => $exists ? $this->render($entity) : $empty_message,
     ];
   }
 
@@ -120,4 +121,68 @@ class edam__genome_rendering_formatter extends ChadoFieldFormatter {
   public function settingsSummary($view_mode) {
   }
 
+  /**
+   * Render the pane content.
+   *
+   * @param $record
+   *
+   * @return String An HTML string representing the themed output.
+   */
+  protected function render_template($record) {
+    return theme('tripal_jbrowse_instance_pane', ['record' => $record]);
+  }
+
+  /**
+   * Parse jbrowse links to include tracks.
+   *
+   * @param $record
+   * @param $node
+   */
+  protected function parse_link(&$record, $entity) {
+    //$type = $entity->chado_table;
+    // Add loc parameters
+    if (!empty($record->tracks)) {
+      $tracks = json_decode($record->tracks);
+      foreach ($tracks as $key => $track) {
+        $tracks[$key] = trim($track);
+      }
+
+      $tracks = implode(',', $tracks);
+
+      if (strpos($record->link, '?') !== FALSE) {
+        $record->link .= "&tracks={$tracks}";
+      }
+      else {
+        $record->link .= "?tracks={$tracks}";
+      }
+    }
+
+    //if ($type === 'feature') {
+    //$record->link .= "&loc={$node->feature->uniquename}";
+    //$record->link .= "&highlight={$node->feature->uniquename}";
+    //}
+  }
+
+  /**
+   * Implements hook_node_view().
+   *
+   * @param $node
+   * @param $view_mode
+   * @param $langcode
+   *
+   * @return mixed
+   */
+  protected function render($entity) {
+    $record = $entity->{static::$field_types[0]}['und'][0]['record'];
+
+    $type = $entity->chado_table;
+
+    if ($record) {
+      if ($type === 'organism' && !$record->show_in_organism_page) {
+        return;
+      }
+      $this->parse_link($record, $entity);
+      return $this->render_template($record);
+    }
+  }
 }

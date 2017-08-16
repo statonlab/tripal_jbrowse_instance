@@ -5,3 +5,102 @@
 */
 
 include drupal_get_path('module', 'tripal_jbrowse_instance') . '/includes/tripal_jbrowse_instance.fields.inc';
+include drupal_get_path('module', 'tripal_jbrowse_instance') . '/includes/tripal_jbrowse_instance.form.inc';
+include drupal_get_path('module', 'tripal_jbrowse_instance') . '/theme/tripal_jbrowse_instance.theme.inc';
+
+
+/**
+ * Implements hook_permission().
+ *
+ * Define access permissions.
+ */
+function tripal_jbrowse_instance_permission() {
+  $items = [
+    'administer jbrowse links' => [
+      'title' => t('Administer Feature URLs'),
+      'description' => t('Manage feature urls per organism.'),
+    ],
+  ];
+
+  return $items;
+}
+
+/**
+ * Implements hook_menu().
+ *
+ * Define menu urls and their callbacks.
+ *
+ * @return mixed
+ */
+function tripal_jbrowse_instance_menu() {
+  $items['admin/tripal/extension/jbrowse_instance'] = [
+    'title' => t('JBrowse Link'),
+    'description' => t('Manage JBrowse links'),
+    'page callback' => 'theme',
+    'page arguments' => ['tripal_jbrowse_instance_admin'],
+    'access arguments' => ['administer jbrowse links'],
+    'type' => MENU_NORMAL_ITEM,
+  ];
+
+  $items['admin/tripal/extension/jbrowse_instance/list'] = [
+    'title' => t('List'),
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => 1,
+  ];
+
+  $items['admin/tripal/extension/jbrowse_instance/add'] = [
+    'title' => t('Add'),
+    'description' => t('Add new feature JBrowse link'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => ['tripal_jbrowse_instance_form'],
+    'access arguments' => ['administer jbrowse links'],
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 2,
+  ];
+
+  $items['admin/tripal/extension/jbrowse_instance/edit/%'] = [
+    'title' => t('Edit'),
+    'description' => t('Edit previous submission'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => ['tripal_jbrowse_instance_form', 5],
+    'access arguments' => ['administer jbrowse links'],
+    'type' => MENU_CALLBACK,
+    'weight' => 2,
+  ];
+
+  $items['admin/tripal/extension/jbrowse_instance/delete/%'] = [
+    'title' => t('Delete'),
+    'description' => t('Delete link'),
+    'page callback' => 'tripal_jbrowse_instance_delete',
+    'page arguments' => [5],
+    'access arguments' => ['administer jbrowse links'],
+    'type' => MENU_CALLBACK,
+    'weight' => 2,
+  ];
+
+  return $items;
+}
+
+/**
+ * Implements hook_theme().
+ *
+ * @param $existing
+ * @param $type
+ * @param $theme
+ * @param $path
+ */
+function tripal_jbrowse_instance_theme($existing, $type, $theme, $path) {
+  $items = [
+    'tripal_jbrowse_instance_pane' => [
+      'variables' => ['record' => ''],
+      'template' => 'tripal_jbrowse_instance_pane',
+      'path' => "{$path}/theme/templates",
+    ],
+    'tripal_jbrowse_instance_admin' => [
+      'template' => 'tripal_jbrowse_instance_admin',
+      'path' => "{$path}/theme/templates",
+    ],
+  ];
+
+  return $items;
+}

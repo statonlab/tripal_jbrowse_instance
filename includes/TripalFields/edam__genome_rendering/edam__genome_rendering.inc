@@ -122,5 +122,25 @@ class edam__genome_rendering extends ChadoField{
     // need to implement this function. However, if you need to add any
     // additional data to be used in the display, you should add it here.
     parent::load($entity);
+    $field = 'edam__genome_rendering';
+    $entity->{$field}['und'][0]['value'] = isset($entity->{$field}['und'][0]['chado-organism__organism_id']) ? $entity->{$field}['und'][0]['chado-organism__organism_id'] : $entity->{$field}['und'][0]['chado-feature__organism_id'];
+    $entity->{$field}['und'][0]['record'] = $this->get_jbrowse_record($entity->{$field}['und'][0]['value']);
+  }
+
+  /**
+   * Get the record from the db.
+   *
+   * @param $organism_id
+   *
+   * @return mixed
+   */
+  protected function get_jbrowse_record($organism_id) {
+    if (!$organism_id) {
+      return FALSE;
+    }
+
+    return db_query('SELECT * FROM {tripal_jbrowse_instance} WHERE organism_id=:id', [
+      ':id' => $organism_id,
+    ])->fetchObject();
   }
 }
