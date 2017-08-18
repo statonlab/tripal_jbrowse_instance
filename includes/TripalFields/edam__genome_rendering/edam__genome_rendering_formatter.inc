@@ -145,7 +145,6 @@ class edam__genome_rendering_formatter extends ChadoFieldFormatter{
    * @param $node
    */
   protected function parse_link(&$record, $entity) {
-    dpm($entity);
     $type = $entity->chado_table;
     // Add loc parameters
     if (!empty($record->tracks)) {
