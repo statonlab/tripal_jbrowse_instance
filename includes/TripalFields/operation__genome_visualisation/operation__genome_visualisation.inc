@@ -57,7 +57,7 @@ class operation__genome_visualisation extends ChadoField{
   // required for all TripalFields.
   public static $default_instance_settings = [
     // The short name for the vocabulary (e.g. schema, SO, GO, PATO, etc.).
-    'term_vocabulary' => 'EDAM',
+    'term_vocabulary' => 'operation',
     // The name of the term.
     'term_name' => 'genome_visualisation',
     // The unique ID (i.e. accession) of the term.

@@ -42,5 +42,5 @@ function tripal_jbrowse_instance_update_7100() {
  * Delete the old field genome_rendering
  */
 function tripal_jbrowse_instance_update_7101() {
-  field_delete_field('edam_genome_rendering');
+  field_delete_field('edam__genome_rendering');
 }
