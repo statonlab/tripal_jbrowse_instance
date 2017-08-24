@@ -25,3 +25,22 @@ function tripal_jbrowse_instance_schema() {
 
   return $schema;
 }
+
+/**
+ * Add the necessary terms to chado.
+ */
+function tripal_jbrowse_instance_update_7100() {
+  tripal_insert_cvterm([
+    'id' => 'operation:3208',
+    'name' => 'genome_visualisation',
+    'cv_name' => 'EDAM',
+    'definition' => 'Visualise, format or render a nucleic acid sequence that is part of (and in context of) a complete genome sequence.',
+  ]);
+}
+
+/**
+ * Delete the old field genome_rendering
+ */
+function tripal_jbrowse_instance_update_7101() {
+  field_delete_field('edam__genome_rendering');
+}

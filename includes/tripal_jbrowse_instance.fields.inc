@@ -41,17 +41,9 @@ function tripal_jbrowse_instance_bundle_fields_info($entity_type, $bundle) {
   // property of the bundle to determine if this bundle is really the one
   // we want the field to be associated with.
   if (isset($bundle->data_table) AND ($bundle->data_table == 'organism' OR $bundle->data_table == 'feature')) {
-    // First add my term.
-    tripal_insert_cvterm([
-      'id' => 'edam:genome_rendering',
-      'name' => 'genome_rendering',
-      'cv_name' => 'edam',
-      'definition' => 'Visualise, format or render a nucleic acid sequence that is part of (and in context of) a complete genome sequence.',
-    ]);
-
     // Then describe the field defined by that term.
-    $field_name = 'edam__genome_rendering';
-    $field_type = 'edam__genome_rendering';
+    $field_name = 'operation__genome_visualisation';
+    $field_type = 'operation__genome_visualisation';
     $fields[$field_name] = [
       'field_name' => $field_name,
       'type' => $field_type,
@@ -96,8 +88,7 @@ function tripal_jbrowse_instance_bundle_instances_info($entity_type, $bundle) {
   // ORGANISM.
   //===============
   if (isset($bundle->data_table) AND ($bundle->data_table == 'organism' OR $bundle->data_table == 'feature')) {
-    $field_name = 'edam__genome_rendering';
-    $field_type = 'edam__genome_rendering';
+    $field_name = 'operation__genome_visualisation';
     $field_table = $bundle->data_table;
     $instances[$field_name] = [
       'field_name' => $field_name,
@@ -113,7 +104,7 @@ function tripal_jbrowse_instance_bundle_instances_info($entity_type, $bundle) {
         'base_table' => $field_table,
       ],
       'widget' => [
-        'type' => 'edam__genome_rendering_widget',
+        'type' => 'operation__genome_visualisation_widget',
         'settings' => [],
       ],
       'display' => [
@@ -121,7 +112,7 @@ function tripal_jbrowse_instance_bundle_instances_info($entity_type, $bundle) {
           'label' => 'hidden',
           'region' => 'Right',
           'settings' => [],
-          'type' => 'edam__genome_rendering_formatter',
+          'type' => 'operation__genome_visualisation_formatter',
         ],
       ],
     ];

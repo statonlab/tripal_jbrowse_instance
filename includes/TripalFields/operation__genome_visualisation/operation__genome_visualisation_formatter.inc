@@ -7,13 +7,13 @@
  * Display:
  * Configuration:
  */
-class edam__genome_rendering_formatter extends ChadoFieldFormatter{
+class operation__genome_visualisation_formatter extends ChadoFieldFormatter{
 
   // The default label for this field.
   public static $default_label = 'JBrowse Instance Formatter';
 
   // The list of field types for which this formatter is appropriate.
-  public static $field_types = ['edam__genome_rendering'];
+  public static $field_types = ['operation__genome_visualisation'];
 
   // The list of default settings for this formatter.
   public static $default_settings = [
@@ -80,11 +80,8 @@ class edam__genome_rendering_formatter extends ChadoFieldFormatter{
    *    hook_field_formatter_view() function.
    */
   public function view(&$element, $entity_type, $entity, $langcode, $items, $display) {
-    // Get the settings
-    $settings = $display['settings'];
-
     $empty_message = '<p style="margin: 10px 0;">A JBrowse instance does not exist for this organism.</p>';
-    $exists = $entity->edam__genome_rendering['und'][0]['record'];
+    $exists = $entity->operation__genome_visualisation['und'][0]['record'];
 
     /*if (!$exists) {
       $entity->edam__genome_rendering['und'][0] = NULL;
@@ -176,7 +173,7 @@ class edam__genome_rendering_formatter extends ChadoFieldFormatter{
    * @param $view_mode
    * @param $langcode
    *
-   * @return mixed
+   * @return mixed|null
    */
   protected function render($entity) {
     $record = $entity->{static::$field_types[0]}['und'][0]['record'];

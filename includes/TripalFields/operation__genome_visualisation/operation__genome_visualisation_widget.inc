@@ -8,7 +8,7 @@
  * Data:
  * Assumptions:
  */
-class edam__genome_rendering_widget extends ChadoFieldWidget{
+class operation__genome_visualisation_widget extends ChadoFieldWidget{
 
   // The default label for this field.
   public static $default_label = 'JBrowse Instance Widget';

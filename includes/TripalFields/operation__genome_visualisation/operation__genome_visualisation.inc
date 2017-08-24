@@ -7,7 +7,7 @@
  * Data:
  * Assumptions:
  */
-class edam__genome_rendering extends ChadoField{
+class operation__genome_visualisation extends ChadoField{
 
   // --------------------------------------------------------------------------
   //                     EDITABLE STATIC CONSTANTS
@@ -24,10 +24,10 @@ class edam__genome_rendering extends ChadoField{
   public static $default_description = 'Link to JBrowse location';
 
   // The default widget for this field.
-  public static $default_widget = 'edam__genome_rendering_widget';
+  public static $default_widget = 'operation__genome_visualisation_widget';
 
   // The default formatter for this field.
-  public static $default_formatter = 'edam__genome_rendering_formatter';
+  public static $default_formatter = 'operation__genome_visualisation_formatter';
 
   // The module that manages this field.
   public static $module = 'tripal_jbrowse_instance';
@@ -57,11 +57,11 @@ class edam__genome_rendering extends ChadoField{
   // required for all TripalFields.
   public static $default_instance_settings = [
     // The short name for the vocabulary (e.g. schema, SO, GO, PATO, etc.).
-    'term_vocabulary' => 'edam',
+    'term_vocabulary' => 'operation',
     // The name of the term.
-    'term_name' => 'genome_rendering',
+    'term_name' => 'genome_visualisation',
     // The unique ID (i.e. accession) of the term.
-    'term_accession' => 'genome_rendering',
+    'term_accession' => '3208',
     // Set to TRUE if the site admin is not allowed to change the term
     // type, otherwise the admin can change the term mapped to a field.
     'term_fixed' => FALSE,
@@ -122,7 +122,7 @@ class edam__genome_rendering extends ChadoField{
     // need to implement this function. However, if you need to add any
     // additional data to be used in the display, you should add it here.
     parent::load($entity);
-    $field = 'edam__genome_rendering';
+    $field = get_class();
     $entity->{$field}['und'][0]['value'] = isset($entity->{$field}['und'][0]['chado-organism__organism_id']) ? $entity->{$field}['und'][0]['chado-organism__organism_id'] : $entity->{$field}['und'][0]['chado-feature__organism_id'];
     $entity->{$field}['und'][0]['record'] = $this->get_jbrowse_record($entity->{$field}['und'][0]['value']);
   }
