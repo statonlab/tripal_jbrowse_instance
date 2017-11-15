@@ -7,7 +7,7 @@
  * Data:
  * Assumptions:
  */
-class operation__genome_visualisation extends ChadoField{
+class operation__genome_visualisation extends ChadoField {
 
   // --------------------------------------------------------------------------
   //                     EDITABLE STATIC CONSTANTS
@@ -125,6 +125,10 @@ class operation__genome_visualisation extends ChadoField{
     $field = get_class();
     $entity->{$field}['und'][0]['value'] = isset($entity->{$field}['und'][0]['chado-organism__organism_id']) ? $entity->{$field}['und'][0]['chado-organism__organism_id'] : $entity->{$field}['und'][0]['chado-feature__organism_id'];
     $entity->{$field}['und'][0]['record'] = $this->get_jbrowse_record($entity->{$field}['und'][0]['value']);
+
+    if (!$entity->{$field}['und'][0]['record']) {
+      $entity->{$field}['und'][0]['value'] = NULL;
+    }
   }
 
   /**
