@@ -16,6 +16,11 @@ function tripal_jbrowse_instance_schema() {
         'not null' => TRUE,
         'unsigned' => TRUE,
       ],
+      'regexp' => [
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => FALSE,
+      ],
     ],
     'unique keys' => [
       'organism_id' => ['organism_id'],
@@ -24,6 +29,11 @@ function tripal_jbrowse_instance_schema() {
   ];
 
   return $schema;
+}
+
+function tripal_jbrowse_instance_install() {
+  tripal_jbrowse_instance_update_7100();
+  tripal_jbrowse_instance_update_7101();
 }
 
 /**
@@ -43,4 +53,19 @@ function tripal_jbrowse_instance_update_7100() {
  */
 function tripal_jbrowse_instance_update_7101() {
   field_delete_field('edam__genome_rendering');
+}
+
+/**
+ *
+ */
+function tripal_jbrowse_instance_update_7102() {
+  if (!db_field_exists('tripal_jbrowse_instance', 'regexp')) {
+    $regexp = [
+      'type' => 'varchar',
+      'length' => '255',
+      'not null' => FALSE,
+    ];
+
+    db_add_field('tripal_jbrowse_instance', 'regexp', $regexp);
+  }
 }
