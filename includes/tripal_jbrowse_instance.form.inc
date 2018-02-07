@@ -67,6 +67,14 @@ function tripal_jbrowse_instance_form($form, &$form_state, $id = NULL) {
     '#default_value' => isset($tracks) ? $tracks : '',
   ];
 
+  $form_state['regex'] = [
+    '#type' => 'textfield',
+    '#title' => t('Location RegExp'),
+    '#description' => t('If the unique name of the feature does not match the
+                         feature name in JBrowse, you can provide a regexp to
+                         extract the correct uniquename. Example: <code>/(.*)-RA/</code>'),
+  ];
+
   $form['description'] = [
     '#type' => 'text_format',
     '#title' => t('Pane Page Content'),
@@ -115,6 +123,7 @@ function tripal_jbrowse_instance_form_submit($form, &$form_sate) {
     'tracks' => json_encode($tracks),
     'description' => json_encode($values['description']),
     'show_in_organism_page' => $values['show_in_organism'] ? 1 : 0,
+    'regexp' => isset($values['regexp']) ? $values['regexp'] : '',
   ];
 
   if ($id && $id > 0) {

@@ -7,7 +7,7 @@
  * Display:
  * Configuration:
  */
-class operation__genome_visualisation_formatter extends ChadoFieldFormatter{
+class operation__genome_visualisation_formatter extends ChadoFieldFormatter {
 
   // The default label for this field.
   public static $default_label = 'JBrowse Instance Formatter';
@@ -80,15 +80,15 @@ class operation__genome_visualisation_formatter extends ChadoFieldFormatter{
    *    hook_field_formatter_view() function.
    */
   public function view(&$element, $entity_type, $entity, $langcode, $items, $display) {
+    $field = $this->field['field_name'];
     $empty_message = '<p style="margin: 10px 0;">A JBrowse instance does not exist for this organism.</p>';
-    $exists = $entity->operation__genome_visualisation['und'][0]['record'];
+    $exists = $entity->{$field}['und'][0]['value']['instance'];
 
-    /*if (!$exists) {
-      $entity->edam__genome_rendering['und'][0] = NULL;
+    if (!$exists) {
       return;
-    }*/
+    }
 
-    $element[0] = [
+    $element[] = [
       '#type' => 'markup',
       '#markup' => $exists ? $this->render($entity) : $empty_message,
     ];
@@ -161,7 +161,16 @@ class operation__genome_visualisation_formatter extends ChadoFieldFormatter{
     }
 
     if ($type === 'feature') {
-      $record->link .= "&loc={$entity->chado_record->uniquename}";
+      $feature_name = $entity->chado_record->uniquename;
+
+      if ($record->regexp) {
+        preg_match($record->regexp, $entity->chado_record->uniquename, $matches);
+        if (isset($matches[1])) {
+          $feature_name = $matches[1];
+        }
+      }
+
+      $record->link .= "&loc={$feature_name}";
       //$record->link .= "&highlight={$node->feature->uniquename}";
     }
   }
