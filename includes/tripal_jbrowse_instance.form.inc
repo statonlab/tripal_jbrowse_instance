@@ -50,29 +50,44 @@ function tripal_jbrowse_instance_form($form, &$form_state, $id = NULL) {
     '#default_value' => isset($title) ? $title : t('JBrowse'),
     '#description' => t('The pane\'s link title.'),
     '#required' => TRUE,
+    '#attributes' => [
+      'placeholder' => t('E.g, JBrowse')
+    ]
   ];
 
   $form['link'] = [
     '#type' => 'textfield',
     '#title' => t('Feature JBrowse Link'),
-    '#description' => t('Link to the JBrowse instance. Example: /jbrowse/?data=organism or https://example.com/jbrowse?data=organism.'),
+    '#description' => t('Link to the JBrowse instance. Example: 
+                         /jbrowse/?data=organism or
+                         https://example.com/jbrowse?data=organism.'),
     '#required' => TRUE,
     '#default_value' => isset($link) ? $link : '',
+    '#attributes' => [
+      'placeholder' => t('E.g, /jbrowse/?data=valley_oak')
+    ]
   ];
 
   $form['tracks'] = [
     '#type' => 'textfield',
     '#title' => t('JBrowse Tracks'),
-    '#description' => t('Add a comma separated list of JBrowse tracks to display by default. Example: gene, MARKER1, Marker2.'),
+    '#description' => t('Add a comma separated list of JBrowse tracks to display
+                         by default.'),
     '#default_value' => isset($tracks) ? $tracks : '',
+    '#attributes' => [
+      'placeholder' => t('E.g, gene, MARKER1')
+    ]
   ];
 
-  $form_state['regex'] = [
+  $form['regexp'] = [
     '#type' => 'textfield',
     '#title' => t('Location RegExp'),
     '#description' => t('If the unique name of the feature does not match the
                          feature name in JBrowse, you can provide a regexp to
-                         extract the correct uniquename. Example: <code>/(.*)-RA/</code>'),
+                         extract the correct uniquename.'),
+    '#attributes' => [
+      'placeholder' => t('E.g, /(.*)-RA/')
+    ]
   ];
 
   $form['description'] = [
