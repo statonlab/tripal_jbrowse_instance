@@ -18,6 +18,8 @@ function tripal_jbrowse_instance_form($form, &$form_state, $id = NULL) {
       $tracks = implode(',', json_decode($record->tracks));
       $description = json_decode($record->description);
       $show = $record->show_in_organism_page;
+      $regexp = $record->regexp;
+      $location = $record->default_location;
     }
     else {
       return drupal_not_found();
@@ -87,6 +89,7 @@ function tripal_jbrowse_instance_form($form, &$form_state, $id = NULL) {
     '#attributes' => [
       'placeholder' => t('E.g, scaffold3071:1..34144 or using a feature name'),
     ],
+    '#default_value' => isset($location) ? $location : '',
   ];
 
   $form['regexp'] = [
@@ -98,6 +101,7 @@ function tripal_jbrowse_instance_form($form, &$form_state, $id = NULL) {
     '#attributes' => [
       'placeholder' => t('E.g, /(.*)-RA/'),
     ],
+    '#default_value' => isset($regexp) ? $regexp : '',
   ];
 
   $form['description'] = [
