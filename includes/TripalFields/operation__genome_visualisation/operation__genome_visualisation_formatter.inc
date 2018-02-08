@@ -185,7 +185,8 @@ class operation__genome_visualisation_formatter extends ChadoFieldFormatter {
    * @return mixed|null
    */
   protected function render($entity) {
-    $record = $entity->{static::$field_types[0]}['und'][0]['record'];
+    $field = $this->field['field_name'];
+    $record = $entity->{$field}['und'][0]['value']['instance'];
 
     $type = $entity->chado_table;
 
