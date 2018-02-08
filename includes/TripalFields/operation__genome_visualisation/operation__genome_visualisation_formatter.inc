@@ -173,6 +173,9 @@ class operation__genome_visualisation_formatter extends ChadoFieldFormatter {
       $record->link .= "&loc={$feature_name}";
       //$record->link .= "&highlight={$node->feature->uniquename}";
     }
+    elseif (!empty($record->default_location)) {
+      $record->link .= "&loc={$record->default_location}";
+    }
   }
 
   /**

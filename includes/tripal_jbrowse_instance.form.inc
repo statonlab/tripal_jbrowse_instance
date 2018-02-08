@@ -51,8 +51,8 @@ function tripal_jbrowse_instance_form($form, &$form_state, $id = NULL) {
     '#description' => t('The pane\'s link title.'),
     '#required' => TRUE,
     '#attributes' => [
-      'placeholder' => t('E.g, JBrowse')
-    ]
+      'placeholder' => t('E.g, JBrowse'),
+    ],
   ];
 
   $form['link'] = [
@@ -64,8 +64,8 @@ function tripal_jbrowse_instance_form($form, &$form_state, $id = NULL) {
     '#required' => TRUE,
     '#default_value' => isset($link) ? $link : '',
     '#attributes' => [
-      'placeholder' => t('E.g, /jbrowse/?data=valley_oak')
-    ]
+      'placeholder' => t('E.g, /jbrowse/?data=valley_oak'),
+    ],
   ];
 
   $form['tracks'] = [
@@ -75,8 +75,18 @@ function tripal_jbrowse_instance_form($form, &$form_state, $id = NULL) {
                          by default.'),
     '#default_value' => isset($tracks) ? $tracks : '',
     '#attributes' => [
-      'placeholder' => t('E.g, gene, MARKER1')
-    ]
+      'placeholder' => t('E.g, gene, MARKER1'),
+    ],
+  ];
+
+  $form['default_location'] = [
+    '#type' => 'textfield',
+    '#title' => t('Default Location'),
+    '#description' => t('A landing location on JBrowse. This will get added to
+                         the URL as &loc=value.'),
+    '#attributes' => [
+      'placeholder' => t('E.g, scaffold3071:1..34144 or using a feature name'),
+    ],
   ];
 
   $form['regexp'] = [
@@ -86,8 +96,8 @@ function tripal_jbrowse_instance_form($form, &$form_state, $id = NULL) {
                          feature name in JBrowse, you can provide a regexp to
                          extract the correct uniquename.'),
     '#attributes' => [
-      'placeholder' => t('E.g, /(.*)-RA/')
-    ]
+      'placeholder' => t('E.g, /(.*)-RA/'),
+    ],
   ];
 
   $form['description'] = [
@@ -139,6 +149,7 @@ function tripal_jbrowse_instance_form_submit($form, &$form_sate) {
     'description' => json_encode($values['description']),
     'show_in_organism_page' => $values['show_in_organism'] ? 1 : 0,
     'regexp' => isset($values['regexp']) ? $values['regexp'] : '',
+    'default_location' => isset($values['default_location']) ? $values['default_location'] : '',
   ];
 
   if ($id && $id > 0) {
