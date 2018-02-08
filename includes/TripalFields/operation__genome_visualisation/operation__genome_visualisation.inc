@@ -133,7 +133,7 @@ class operation__genome_visualisation extends ChadoField {
 
     $entity->{$field}['und'][0]['value'] = [
       'record_id' => $record_id,
-      'instance' => $this->get_jbrowse_record($entity->{$field}['und'][0]['value']),
+      'instance' => $this->get_jbrowse_record($record_id),
     ];
 
     if (!$entity->{$field}['und'][0]['value']['instance']) {
