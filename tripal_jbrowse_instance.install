@@ -21,6 +21,11 @@ function tripal_jbrowse_instance_schema() {
         'length' => '255',
         'not null' => FALSE,
       ],
+      'default_location' => [
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => FALSE,
+      ],
     ],
     'unique keys' => [
       'organism_id' => ['organism_id'],
@@ -56,7 +61,7 @@ function tripal_jbrowse_instance_update_7101() {
 }
 
 /**
- *
+ * Add regexp field
  */
 function tripal_jbrowse_instance_update_7102() {
   if (!db_field_exists('tripal_jbrowse_instance', 'regexp')) {
@@ -67,5 +72,20 @@ function tripal_jbrowse_instance_update_7102() {
     ];
 
     db_add_field('tripal_jbrowse_instance', 'regexp', $regexp);
+  }
+}
+
+/**
+ * Add default_location field
+ */
+function tripal_jbrowse_instance_update_7103() {
+  if (!db_field_exists('tripal_jbrowse_instance', 'default_location')) {
+    $default_location = [
+      'type' => 'varchar',
+      'length' => '255',
+      'not null' => FALSE,
+    ];
+
+    db_add_field('tripal_jbrowse_instance', 'default_location', $default_location);
   }
 }
