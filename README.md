@@ -15,6 +15,4 @@ Please report any issues in the GitHub [issue tracker](https://github.com/staton
 Contributions are always welcome and appreciated!
 
 ## License
-This tool is licensed under the Apache 2.0 license. The details of which can be found on the [Apache website](http://www.apache.org/licenses/LICENSE-2.0).
-
-The license notice can be found in the [License](https://github.com/statonlab/tripal_jbrowse_instance/blob/master/License) file.
+This tool is licensed under the MIT license. The license notice can be found in the [License](https://github.com/statonlab/tripal_jbrowse_instance/blob/master/License) file.
