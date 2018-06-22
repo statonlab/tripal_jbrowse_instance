@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/98675535.svg)](https://zenodo.org/badge/latestdoi/98675535)
+
 ## Introduction
 This is a [Tripal](https://github.com/tripal/tripal) extension that provides a method for administrators to add a JBrowse link to certain feature and organism pages. It allows for the pane link to either directly transfer the user to the JBrowse instance or show a tab page that contains some description and a direct link to the JBrowse instance.
 
