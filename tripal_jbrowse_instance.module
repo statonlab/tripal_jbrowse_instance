@@ -1,8 +1,8 @@
 <?php
 /**
-* @file
-* The JBrowse instance module provides a link to an organisms' jbrowse page.
-*/
+ * @file
+ * The JBrowse instance module provides a link to an organisms' jbrowse page.
+ */
 
 include drupal_get_path('module', 'tripal_jbrowse_instance') . '/includes/tripal_jbrowse_instance.fields.inc';
 include drupal_get_path('module', 'tripal_jbrowse_instance') . '/includes/tripal_jbrowse_instance.form.inc';
@@ -79,6 +79,45 @@ function tripal_jbrowse_instance_menu() {
   ];
 
   return $items;
+}
+
+function tripal_jbrowse_block_info() {
+  $blocks['tripal_jbrowse_list'] = [
+    'info' => 'Tripal JBrowse List',
+  ];
+
+  return $blocks;
+}
+
+function tripal_jbrowse_block_view($delta = '') {
+  $block = [];
+
+  switch ($delta) {
+    case 'tripal_jbrowse_list':
+      $instances = chado_query('SELECT * FROM {tripal_jbrowse_instance}');
+      $header = ['Organism Name', 'Link to JBrowse'];
+      $rows = [];
+      foreach ($instances as $instance) {
+        $organism = chado_get_organism(['organism_id' => $instance->organism_id]);
+        $name = $organism->genus . ' ' . $organism->species;
+        $rows[] = [
+          $name,
+          l('Launch JBrowse', $instance->link, [
+            'attributes' => [
+              'class' => ['btn btn-primary'],
+            ],
+          ]),
+        ];
+      }
+      $block['content'] = theme('table', [
+        'header' => $header,
+        'rows' => $rows,
+      ]);
+
+      break;
+  }
+
+  return $block;
 }
 
 /**
