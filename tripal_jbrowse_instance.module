@@ -94,15 +94,21 @@ function tripal_jbrowse_block_view($delta = '') {
 
   switch ($delta) {
     case 'tripal_jbrowse_list':
-      $records = db_query('SELECT * FROM {tripal_jbrowse_instance}');
+      $records = db_query('
+        SELECT * 
+        FROM {tripal_jbrowse_instance} ti 
+        JOIN {chado.organism} o 
+        ON ti.organism_id=o.organism_id 
+        ORDER BY o.genus, o.species');
       $header = ['Organism Name', 'Link to JBrowse'];
       $rows = [];
       foreach ($records as $record) {
         tripal_jbrowse_instance_parse_link($record);
-        $organism = chado_get_organism(['organism_id' => $record->organism_id]);
-        $name = $organism->genus . ' ' . $organism->species;
+        $entity_id = chado_get_record_entity_by_table('organism', $record->organism_id);
+        // $organism = chado_get_organism(['organism_id' => $record->organism_id]);
+        $name = $record->genus . ' ' . $record->species;
         $rows[] = [
-          $name,
+          l($name, '/bio_data/' . $entity_id),
           '<a href="'.$record->link.'" class="btn btn-primary">Launch JBrowse</a>'
         ];
       }
