@@ -1,8 +1,8 @@
 <?php
 /**
-* @file
-* The JBrowse instance module provides a link to an organisms' jbrowse page.
-*/
+ * @file
+ * The JBrowse instance module provides a link to an organisms' jbrowse page.
+ */
 
 include drupal_get_path('module', 'tripal_jbrowse_instance') . '/includes/tripal_jbrowse_instance.fields.inc';
 include drupal_get_path('module', 'tripal_jbrowse_instance') . '/includes/tripal_jbrowse_instance.form.inc';
@@ -81,6 +81,48 @@ function tripal_jbrowse_instance_menu() {
   return $items;
 }
 
+function tripal_jbrowse_block_info() {
+  $blocks['tripal_jbrowse_list'] = [
+    'info' => 'Tripal JBrowse List',
+  ];
+
+  return $blocks;
+}
+
+function tripal_jbrowse_block_view($delta = '') {
+  $block = [];
+
+  switch ($delta) {
+    case 'tripal_jbrowse_list':
+      $records = db_query('
+        SELECT * 
+        FROM {tripal_jbrowse_instance} ti 
+        JOIN {chado.organism} o 
+        ON ti.organism_id=o.organism_id 
+        ORDER BY o.genus, o.species');
+      $header = ['Organism Name', 'Link to JBrowse'];
+      $rows = [];
+      foreach ($records as $record) {
+        tripal_jbrowse_instance_parse_link($record);
+        $entity_id = chado_get_record_entity_by_table('organism', $record->organism_id);
+        // $organism = chado_get_organism(['organism_id' => $record->organism_id]);
+        $name = $record->genus . ' ' . $record->species;
+        $rows[] = [
+          l($name, '/bio_data/' . $entity_id, ['query' => ['tripal_pane' => 'group_jbrowse']]),
+          '<a href="'.$record->link.'" class="btn btn-primary">Launch JBrowse</a>'
+        ];
+      }
+      $block['content'] = theme('table', [
+        'header' => $header,
+        'rows' => $rows,
+      ]);
+
+      break;
+  }
+
+  return $block;
+}
+
 /**
  * Implements hook_theme().
  *
@@ -103,4 +145,47 @@ function tripal_jbrowse_instance_theme($existing, $type, $theme, $path) {
   ];
 
   return $items;
+}
+
+/**
+ * Parse jbrowse links to include tracks.
+ *
+ * @param $record
+ * @param $node
+ */
+function tripal_jbrowse_instance_parse_link(&$record, $entity = NULL) {
+  $type = $entity ? $entity->chado_table : '';
+  // Add loc parameters
+  if (!empty($record->tracks)) {
+    $tracks = json_decode($record->tracks);
+    foreach ($tracks as $key => $track) {
+      $tracks[$key] = trim($track);
+    }
+
+    $tracks = implode(',', $tracks);
+
+    if (strpos($record->link, '?') !== FALSE) {
+      $record->link .= "&tracks={$tracks}";
+    }
+    else {
+      $record->link .= "?tracks={$tracks}";
+    }
+  }
+
+  if ($type === 'feature') {
+    $feature_name = $entity->chado_record->uniquename;
+
+    if ($record->regexp) {
+      preg_match($record->regexp, $entity->chado_record->uniquename, $matches);
+      if (isset($matches[1])) {
+        $feature_name = $matches[1];
+      }
+    }
+
+    $record->link .= "&loc={$feature_name}";
+    //$record->link .= "&highlight={$node->feature->uniquename}";
+  }
+  elseif (!empty($record->default_location)) {
+    $record->link .= "&loc={$record->default_location}";
+  }
 }

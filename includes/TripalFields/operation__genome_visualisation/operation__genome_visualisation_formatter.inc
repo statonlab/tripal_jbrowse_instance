@@ -136,49 +136,6 @@ class operation__genome_visualisation_formatter extends ChadoFieldFormatter {
   }
 
   /**
-   * Parse jbrowse links to include tracks.
-   *
-   * @param $record
-   * @param $node
-   */
-  protected function parse_link(&$record, $entity) {
-    $type = $entity->chado_table;
-    // Add loc parameters
-    if (!empty($record->tracks)) {
-      $tracks = json_decode($record->tracks);
-      foreach ($tracks as $key => $track) {
-        $tracks[$key] = trim($track);
-      }
-
-      $tracks = implode(',', $tracks);
-
-      if (strpos($record->link, '?') !== FALSE) {
-        $record->link .= "&tracks={$tracks}";
-      }
-      else {
-        $record->link .= "?tracks={$tracks}";
-      }
-    }
-
-    if ($type === 'feature') {
-      $feature_name = $entity->chado_record->uniquename;
-
-      if ($record->regexp) {
-        preg_match($record->regexp, $entity->chado_record->uniquename, $matches);
-        if (isset($matches[1])) {
-          $feature_name = $matches[1];
-        }
-      }
-
-      $record->link .= "&loc={$feature_name}";
-      //$record->link .= "&highlight={$node->feature->uniquename}";
-    }
-    elseif (!empty($record->default_location)) {
-      $record->link .= "&loc={$record->default_location}";
-    }
-  }
-
-  /**
    * Implements hook_node_view().
    *
    * @param $node
@@ -197,7 +154,7 @@ class operation__genome_visualisation_formatter extends ChadoFieldFormatter {
       if ($type === 'organism' && !$record->show_in_organism_page) {
         return;
       }
-      $this->parse_link($record, $entity);
+      tripal_jbrowse_instance_parse_link($record, $entity);
       return $this->render_template($record);
     }
   }
