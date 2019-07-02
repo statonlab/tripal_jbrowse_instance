@@ -108,7 +108,7 @@ function tripal_jbrowse_block_view($delta = '') {
         // $organism = chado_get_organism(['organism_id' => $record->organism_id]);
         $name = $record->genus . ' ' . $record->species;
         $rows[] = [
-          l($name, '/bio_data/' . $entity_id . '?tripal_pane=group_jbrowse'),
+          l($name, '/bio_data/' . $entity_id . '?tripal_pane=group_jbrowse', ['html' => TRUE]),
           '<a href="'.$record->link.'" class="btn btn-primary">Launch JBrowse</a>'
         ];
       }
