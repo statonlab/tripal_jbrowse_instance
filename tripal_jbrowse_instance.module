@@ -94,19 +94,16 @@ function tripal_jbrowse_block_view($delta = '') {
 
   switch ($delta) {
     case 'tripal_jbrowse_list':
-      $instances = chado_query('SELECT * FROM {tripal_jbrowse_instance}');
+      $records = chado_query('SELECT * FROM {tripal_jbrowse_instance}');
       $header = ['Organism Name', 'Link to JBrowse'];
       $rows = [];
-      foreach ($instances as $instance) {
-        $organism = chado_get_organism(['organism_id' => $instance->organism_id]);
+      foreach ($records as $record) {
+        tripal_jbrowse_instance_parse_link($record);
+        $organism = chado_get_organism(['organism_id' => $record->organism_id]);
         $name = $organism->genus . ' ' . $organism->species;
         $rows[] = [
           $name,
-          l('Launch JBrowse', $instance->link, [
-            'attributes' => [
-              'class' => ['btn btn-primary'],
-            ],
-          ]),
+          '<a href="'.$record->link.'" class="btn btn-primary">Launch JBrowse</a>'
         ];
       }
       $block['content'] = theme('table', [
@@ -142,4 +139,47 @@ function tripal_jbrowse_instance_theme($existing, $type, $theme, $path) {
   ];
 
   return $items;
+}
+
+/**
+ * Parse jbrowse links to include tracks.
+ *
+ * @param $record
+ * @param $node
+ */
+function tripal_jbrowse_instance_parse_link(&$record, $entity = NULL) {
+  $type = $entity ? $entity->chado_table : '';
+  // Add loc parameters
+  if (!empty($record->tracks)) {
+    $tracks = json_decode($record->tracks);
+    foreach ($tracks as $key => $track) {
+      $tracks[$key] = trim($track);
+    }
+
+    $tracks = implode(',', $tracks);
+
+    if (strpos($record->link, '?') !== FALSE) {
+      $record->link .= "&tracks={$tracks}";
+    }
+    else {
+      $record->link .= "?tracks={$tracks}";
+    }
+  }
+
+  if ($type === 'feature') {
+    $feature_name = $entity->chado_record->uniquename;
+
+    if ($record->regexp) {
+      preg_match($record->regexp, $entity->chado_record->uniquename, $matches);
+      if (isset($matches[1])) {
+        $feature_name = $matches[1];
+      }
+    }
+
+    $record->link .= "&loc={$feature_name}";
+    //$record->link .= "&highlight={$node->feature->uniquename}";
+  }
+  elseif (!empty($record->default_location)) {
+    $record->link .= "&loc={$record->default_location}";
+  }
 }
