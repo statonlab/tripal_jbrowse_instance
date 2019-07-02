@@ -94,7 +94,7 @@ function tripal_jbrowse_block_view($delta = '') {
 
   switch ($delta) {
     case 'tripal_jbrowse_list':
-      $records = chado_query('SELECT * FROM {tripal_jbrowse_instance}');
+      $records = db_query('SELECT * FROM {tripal_jbrowse_instance}');
       $header = ['Organism Name', 'Link to JBrowse'];
       $rows = [];
       foreach ($records as $record) {
