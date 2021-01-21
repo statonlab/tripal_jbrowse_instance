@@ -102,9 +102,9 @@ function tripal_jbrowse_instance_bundle_instances_info($entity_type, $bundle) {
         'term_name' => 'genome_visualisation',
         'term_accession' => '3208',
         'auto_attach' => TRUE,
-        //'chado_table' => $field_table,
-        //'chado_column' => 'organism_id',
-        //'base_table' => $field_table,
+        'chado_table' => $field_table,
+        'chado_column' => 'organism_id',
+        'base_table' => $field_table,
       ],
       'widget' => [
         'type' => 'operation__genome_visualisation_widget',
